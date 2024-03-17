@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>User List</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Verified</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user_detail in data %}
+        <tr>
+          <td>{{ user_detail.id }}</td>
+          <td>{{ user_detail.user.username }}</td>
+          <td>{{ user_detail.first_name }}</td>
+          <td>{{ user_detail.last_name }}</td>
+          <td>{{ user_detail.email }}</td>
+          <td>{{ user_detail.mobile }}</td>
+          <td>{{ user_detail.address }}</td>
+          <td>{{ user_detail.bln_verified }}</td>
+          <td>
+            {% if not user_detail.bln_verified %}
+            <form action="{% url 'list_api' user_detail.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Verify</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
